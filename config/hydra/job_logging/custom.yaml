@@ -1,0 +1,22 @@
+version: 1
+formatters:
+  simple:
+    format: "[%(levelname)s] (%(name)s) %(message)s"
+  colored:
+    class: colorlog.ColoredFormatter
+    format: "%(log_color)s[%(levelname)s]%(reset)s (%(name)s) %(message)s"
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: colored # Using the colored formatter for console output
+    stream: ext://sys.stdout
+  file:
+    class: logging.FileHandler
+    formatter: simple # Simple format for the file handler
+    # absolute file path
+    filename: ${hydra.runtime.output_dir}/${task_name}.log
+root:
+  level: INFO
+  handlers: [console, file]
+
+disable_existing_loggers: false
