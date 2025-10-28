@@ -1,0 +1,33 @@
+# @package _global_
+
+defaults:
+  - override /data: raw_codex
+  - override /pipeline: default
+  - override /pipeline/tma_dearray: default
+
+task_name: "preprocess_ccc"
+
+data:
+  # root_dir: "datasets/interpret_tme/raw/MY_TMA_CCC_E_CIM"
+  # root_dir: "outputs/preprocess_ccc/2025-10-20/11-19-48/tma_dearray"
+  root_dir: "/storage/groups/interpret_tme/codex_CCC/raw/MY_TMA_CCC_E_CIM"
+
+pipeline:
+  remove_intermediate: false
+
+  deconvolution:
+    algorithm:
+      scale_factor: 0
+      n_iter: 25
+    devices: [0, 0]
+
+  edof:
+    devices: [0, 0]
+
+  illumination_correction:
+    n_jobs: 4
+  
+  tma_dearray:
+    n_jobs: 4
+    ref_cycle: 2
+    ref_channel: 1

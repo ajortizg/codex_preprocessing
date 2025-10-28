@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#SBATCH --partition=gn              # Specify the partition
+#SBATCH --gpus=1                    # Request 1 GPU
+#SBATCH --job-name="prep_codex"     # Job name
+#SBATCH --output=./outputs/logs/prep_MY_TMA_CCC_E_CIM.out  # Output file
+#SBATCH --nodes=1                   # Request 1 node
+#SBATCH --ntasks=1                  # Request 1 task
+#SBATCH --cpus-per-task=16          # Request 16 CPU cores per task
+#SBATCH --mem=100G                  # Request 32GB RAM
+
+
+codex_preprocess +experiment=preprocess_ccc

@@ -11,15 +11,12 @@ dependencies:
   - pandas<=2.2.1 # 2.2.1 uses numpy 1.*
   - pillow
   - scipy
-  - seaborn
   - tensorflow=2.14.1
-  - lxml
   - scikit-learn
   - tensorboard
   - tqdm
   - tifffile<=2025.1.10
   - scikit-image<=0.24.0
-  - scanpy
   - PyWavelets
   - openpyxl
   - pip:
@@ -37,5 +34,8 @@ dependencies:
     - cupy-cuda11x
     - dask
     - dask-image
-    # - opencv-python
+    - torch==2.6.0+cu118
+    - torchvision==0.21.0+cu118
+    - --extra-index-url https://download.pytorch.org/whl/cu118
+    - opencv-python<=4.10.0.82
     # - git+https://github.com/fbcotter/pytorch_wavelets

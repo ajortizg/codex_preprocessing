@@ -11,15 +11,17 @@ import numpy as np
 from joblib import Parallel, delayed
 from tqdm import tqdm
 
-from codex_preprocessing._constants import CodexFiles
+from codex_preprocessing import CodexFiles
 from codex_preprocessing.data import CodexDataset
 from codex_preprocessing.io import save_raw_img, save_raw_tile_stack, save_raw_zstack
-from codex_preprocessing.modules.background_correction import BackgroundCorrector
-from codex_preprocessing.modules.deconvolution import Deconvolution
-from codex_preprocessing.modules.edof import EDoF
-from codex_preprocessing.modules.illumination import IlluminationCorrector
-from codex_preprocessing.modules.stitching import Stitching
-from codex_preprocessing.modules.tma_dearray import CoreographDearray
+from codex_preprocessing.modules import (
+    BackgroundCorrector,
+    CoreographDearray,
+    Deconvolution,
+    EDoF,
+    IlluminationCorrector,
+    Stitching,
+)
 from codex_preprocessing.utils import ensure_path
 
 log = logging.getLogger(__name__)
