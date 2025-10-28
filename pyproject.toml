@@ -48,7 +48,7 @@ dependencies = [
 ]
 
 [project.scripts]
-codex_preprocess = "codex_preprocessing:main"
+codex_preprocess = "codex_preprocessing.main:main"
 # codex_segment = "scripts.run_segmentation:main"
 
 [tool.setuptools.packages]

@@ -7,7 +7,7 @@ from omegaconf import DictConfig, OmegaConf
 
 from codex_preprocessing.utils import configure_tensorflow_gpus, task_wrapper
 
-CONFIG_DIR = str(Path(__file__).parent.parent / "config")
+CONFIG_DIR = str(Path(__file__).parent.parent.parent / "config")
 
 log = logging.getLogger(__name__)
 # logging.getLogger("tensorflow").setLevel(logging.FATAL)

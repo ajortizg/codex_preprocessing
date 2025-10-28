@@ -6,5 +6,5 @@ defaults:
   - background_correction: default
   - tma_dearray: null
 
-_target_: "codex_preprocessing.Pipeline"
+_target_: "codex_preprocessing.pipeline.Pipeline"
 remove_intermediate: false

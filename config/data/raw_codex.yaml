@@ -1,0 +1,6 @@
+_target_: codex_preprocessing.data.CodexDataset
+# root_dir: "datasets/ipt_codex_data/raw/20231220_BAT_4C_2885-1"
+root_dir: ???
+mode: "raw" # raw, proc
+lazy_loading: false
+read_markers: false

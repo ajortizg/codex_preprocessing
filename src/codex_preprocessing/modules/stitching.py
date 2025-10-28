@@ -14,7 +14,7 @@ from typing import List, Optional, Tuple
 import numpy as np
 import pandas as pd
 
-from codex_preprocessing import CodexFiles
+from codex_preprocessing._constants import CodexFiles
 from codex_preprocessing.data import CodexDataset
 from codex_preprocessing.modules.m2stitch import stitch_images
 from codex_preprocessing.utils import ensure_path

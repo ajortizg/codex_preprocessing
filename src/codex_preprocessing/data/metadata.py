@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 
-from codex_preprocessing import CodexFiles
+from codex_preprocessing._constants import CodexFiles
 from codex_preprocessing.utils import ensure_path
 
 

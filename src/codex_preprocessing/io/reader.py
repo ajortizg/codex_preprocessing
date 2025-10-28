@@ -6,8 +6,7 @@ from typing import Optional
 
 import pandas as pd
 
-from codex_preprocessing import CodexFiles
-from codex_preprocessing.data import Metadata
+from codex_preprocessing._constants import CodexFiles
 from codex_preprocessing.utils import ensure_path
 
 
@@ -46,7 +45,7 @@ def read_raw_data(root_dir: Path | str, pattern: str = CodexFiles.RAW_DATA_RE) -
     return pd.DataFrame.from_records(records)
 
 
-def read_processed_data(root_dir: Path | str, meta: Optional[Metadata] = None) -> pd.DataFrame:
+def read_processed_data(root_dir: Path | str, meta: Optional[object] = None) -> pd.DataFrame:
     """
     Read processed CODEX data files from Akoya Processor output.
 
@@ -65,6 +64,8 @@ def read_processed_data(root_dir: Path | str, meta: Optional[Metadata] = None) -
             region, cycle, channel, tile identifiers and image file paths.
             Spatial coordinates (x, y) are converted to tile indices and removed.
     """
+    from codex_preprocessing.data import Metadata
+
     root_dir = ensure_path(root_dir)
 
     if meta is None:

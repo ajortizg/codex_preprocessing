@@ -11,7 +11,7 @@ import numpy as np
 from joblib import Parallel, delayed
 from tqdm import tqdm
 
-from codex_preprocessing import CodexFiles
+from codex_preprocessing._constants import CodexFiles
 from codex_preprocessing.data import CodexDataset
 from codex_preprocessing.io import save_raw_img, save_raw_tile_stack, save_raw_zstack
 from codex_preprocessing.modules import (

@@ -4,7 +4,7 @@ from typing import Optional, Sequence
 import numpy as np
 import tifffile
 
-from codex_preprocessing import CodexFiles
+from codex_preprocessing._constants import CodexFiles
 from codex_preprocessing.utils import ensure_path
 
 
