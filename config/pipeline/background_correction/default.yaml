@@ -1,0 +1,6 @@
+defaults:
+  - algorithm: linear
+
+_target_: codex_preprocessing.nodes.BackgroundCorrectionNode
+_partial_: true
+n_jobs: 1

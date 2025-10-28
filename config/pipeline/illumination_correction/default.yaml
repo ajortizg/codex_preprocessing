@@ -1,0 +1,6 @@
+defaults:
+  - algorithm: basic
+
+_target_: codex_preprocessing.nodes.IlluminationCorrectionNode
+_partial_: true
+n_jobs: 4 # -1 to use one worker per cycle

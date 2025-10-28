@@ -1,0 +1,18 @@
+_target_: codex_preprocessing.modules.CoreographDearray
+model_weights: "weights/coreograph"
+down_factor: 5 # Downsample by 2^down_factor before inference
+preprocessing_params:
+  sigma: 0 # Gaussian σ before inference (0 = off)
+  clip_limit: 0  # CLAHE clip limit (0 = off)
+  kernel_size: 8 # CLAHE tile size (pixels)
+  out_range: [0, 0.983] # Intensity rescale range after normalize
+mask_params:
+  blur_sigma: 5 # σ for mask smoothing before Otsu
+  small_obj_threshold: 0.2 # Min area = threshold * median area
+  buffer_factor: 1.05 # Grows estimated diameter for bbox
+detection_params:
+  sensitivity: 0.2 # LoG blob threshold; lower = more blobs
+  min_sigma_factor: 0.6 # Min σ = factor * core_radius
+extraction_params:
+  translate: null # {label: [dy, dx]} per core; null = none
+  translate_in_down_space: true # True: dy/dx are in downsampled coords

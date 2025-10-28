@@ -1,0 +1,8 @@
+defaults:
+  - focus_metric: whiten_norm
+
+_target_: codex_preprocessing.modules.BestFocusSelector
+single_cycle_channel: true
+focus_cycle: 2
+focus_channel: 1
+crop: 5

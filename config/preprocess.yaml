@@ -1,0 +1,7 @@
+defaults:
+  - hydra: default
+  - data: raw_codex
+  - pipeline: default
+  - _self_
+
+task_name: "preprocess"

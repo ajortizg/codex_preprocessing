@@ -1,0 +1,79 @@
+[project]
+name = "codex_preprocessing"
+version = "0.1"
+requires-python = ">=3.10"
+
+dependencies = [
+    # "numpy==1.23.5",
+    # "tqdm",
+    # # "scipy",
+    # "hydra-core",
+    # "hydra_colorlog",
+    # # "pandas",
+    # # "matplotlib",
+    # # "seaborn",
+    # # "spatialdata>=0.5.0",
+    # # "spatialdata-plot>=0.2.12",
+    # "cudatoolkit==11.8",
+    # "cuda-python==11.8",
+    # "cuda-version==11.8",
+    # "cudnn",
+    # "tensorflow==2.8.1",
+    # "tensorflow-base==2.8.1",
+    # "tensorflow-gpu==2.8.1",
+    # "tensorflow-estimator==2.8.1",
+    # # "sopa>=2.1.5",
+    # "jax>=0.8.0",
+    # "hyperactive==4.4.0",
+    # # "anndata==0.11.3",
+    # # "dask==2024.11.2",
+    # # "opencv-python==4.11.0.86",
+    # # "spatialdata==0.3.0",
+    # # "spatialdata-plot==0.2.10",
+    # # "squidpy==1.6.3",
+    # # "xarray==2024.11.0",
+    # # "xarray-dataclasses<3.0.0",
+    # "ashlar>=1.19.0",
+    # # "basicpy>=1.2.0",
+    # "flowdec>=1.1.0",
+    # "tabulate",
+    # "opencv-python",
+    # "PyWavelets",
+    # "openpyxl",
+    # "stackview",
+    # "cucim-cu11",
+    # "cupy-cuda11x",
+    # "tifffile==2025.1.10",
+    # "scikit-image==0.24.0",
+    # "msoffcrypto-tool",
+    # "yellowbrick",
+    # "concave_hull",
+
+    # torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+    # lightning
+
+    # "git+https://github.com/facebookresearch/detectron2.git",
+    # "git+https://github.com/fbcotter/pytorch_wavelets",
+
+    # pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu124
+
+    # Compile Deformable-DETR CUDA operators
+    # git clone https://github.com/fundamentalvision/Deformable-DETR.git
+    # cd Deformable-DETR
+    # cd ./models/ops
+    # sh ./make.sh
+]
+
+# [project.scripts]
+# codex_preprocess = "scripts.preprocess:main"
+# codex_segment = "scripts.run_segmentation:main"
+
+[tool.setuptools.packages]
+find = { where = ["src", "."], include = ["codex_preprocessing*"] }
+
+[build-system]
+requires = ["setuptools>=67.8.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.codespell]
+skip = '.git,*.pdf,*.svg'

@@ -1,0 +1,6 @@
+defaults:
+  - algorithm: wavelet
+
+_target_: codex_preprocessing.nodes.EDoFNode
+_partial_: true
+devices: [0]

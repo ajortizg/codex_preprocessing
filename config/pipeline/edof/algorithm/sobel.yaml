@@ -1,0 +1,3 @@
+_target_: codex_preprocessing.modules.EDoFSobel
+gaussian_size: 5
+use_gpu: true

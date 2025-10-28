@@ -1,0 +1,10 @@
+defaults:
+  - algorithm: richardson_lucy
+
+_target_: codex_preprocessing.nodes.DeconvolutionNode
+_partial_: true
+psf:
+  size_y: 128
+  size_x: 128
+skip_channels: ["Empty"]
+devices: [0]

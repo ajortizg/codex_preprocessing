@@ -1,0 +1,3 @@
+_target_: codex_preprocessing.modules.WaveletMetric
+wavelet: "haar"
+level: 2

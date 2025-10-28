@@ -1,0 +1,10 @@
+defaults:
+  - deconvolution: default
+  - edof: focus_whiten
+  - illumination_correction: default
+  - stitching: default
+  - background_correction: default
+  - tma_dearray: null
+
+_target_: "codex_preprocessing.Pipeline"
+remove_intermediate: false

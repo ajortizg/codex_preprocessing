@@ -1,0 +1,5 @@
+_target_: codex_preprocessing.modules.LinearInterpolationCorrector
+_partial_: true
+nuclear_channel: 1 # 1-based indexing
+skip_markers: []
+first_cycle: 1

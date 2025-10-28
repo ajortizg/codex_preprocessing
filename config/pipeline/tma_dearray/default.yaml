@@ -1,0 +1,8 @@
+defaults:
+  - algorithm: coreograph
+
+_target_: codex_preprocessing.nodes.TMADearrayNode
+_partial_: true
+n_jobs: 4
+ref_cycle: 2
+ref_channel: 1

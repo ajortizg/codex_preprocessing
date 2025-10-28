@@ -1,0 +1,8 @@
+defaults:
+  - algorithm: ashlar
+
+_target_: codex_preprocessing.nodes.StitchingNode
+_partial_: true
+out_fmt: "raw" # raw, codex_proc
+extra_args: null
+n_jobs: 1

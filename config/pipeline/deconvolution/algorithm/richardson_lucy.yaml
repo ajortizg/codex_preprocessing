@@ -1,0 +1,5 @@
+_target_: codex_preprocessing.modules.RLDeconvolution
+_partial_: true
+n_iter: 64
+scale_factor: 0.5
+use_gpu: true

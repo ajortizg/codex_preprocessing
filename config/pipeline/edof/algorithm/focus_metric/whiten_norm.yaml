@@ -1,0 +1,2 @@
+_target_: codex_preprocessing.modules.WhitenNorm
+sigma: 1.0

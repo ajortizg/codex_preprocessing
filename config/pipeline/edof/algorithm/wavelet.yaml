@@ -1,0 +1,9 @@
+_target_: codex_preprocessing.modules.EDoFWavelet
+biort: "near_sym_a"
+qshift: "qshift_a"
+level: 2
+crop: 5
+gaussian_size: 5
+use_gpu: true
+nuclear_channel: 1
+max_project_non_nuclear_channels: true

@@ -1,0 +1,12 @@
+defaults:
+  - algorithm: best_focus_whiten
+
+_target_: codex_preprocessing.nodes.EDoFNode
+_partial_: true
+devices: [0]
+# processor:
+#   n_splits: 1
+#   use_gpu: false
+# algorithm:
+#   use_gpu: ${edof.processor.use_gpu}
+# n_workers: 8
