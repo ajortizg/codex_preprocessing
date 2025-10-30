@@ -1,7 +1,5 @@
-_target_: codex_preprocessing.modules.SaptialDataExporter
+_target_: codex_preprocessing.modules.SpatialDataExporter
 _partial_: true
 remove_markers: ["Empty", "Blank"]
-save_zarr: true
-save_explorer: false
 scale_factors: null
 rename_dict: null

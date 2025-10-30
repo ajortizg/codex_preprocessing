@@ -9,4 +9,4 @@
 #SBATCH --mem=100G                  # Request RAM
 #SBATCH --nodelist=gn03
 
-python main.py +experiment=preprocess_ccc
+python main.py +experiment=preprocess_ccc ~pipeline.deconvolution ~pipeline.edof ~pipeline.illumination_correction

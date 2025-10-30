@@ -1,40 +1,12 @@
-from sopa._constants import ATTRS_KEY, SopaKeys
-
-
-class Keys(SopaKeys):
+class Keys:
     IMAGE = "image"
-    EXPERIMENT = "exp_name"
-    LABELS = "labels"
-    TMA_CORE = "tma_core"
-
-    RAW_OBSM = "raw"
-    NORM_OBSM = "normalized"
-    VOR_EXPANSION_BOUNDARIES = "vor_expansion_boundaries"
-    VOR_REGION_BOUNDARIES = "vor_region_boundaries"
-    VOR_SUB_NUCLEI_BOUNDARIES = "vor_sub_nuclei_boundaries"
-
     DEFAULT_CS = "global"
-
-    MEMBRANE_BOUNDARIES = "membrane_boundaries"
-    NUCLEAR_BOUNDARIES = "nuclear_boundaries"
-    CENTROID_BOUNDARIES = "centroid_boundaries"
-    CELL_BOUNDARIES = "cell_boundaries"
-
-    INSTANSEG_BOUNDARIES = "instanseg_boundaries"
-
     CODEX_METADATA = "codex_metadata"
 
 
 class CodexFiles:
-    SEG_TMP_DIR = "seg_temp.zarr"
-    PREPROCESSING_DIR = "preprocessing"
-
     # Raw data format
-    # RAW_DATA_RE = (
-    #     r"cyc(?P<cycle>[0-9]{3})_reg(?P<region>[0-9]{3})/.*\w_(?P<tile>\d*)_Z(?P<zslice>\d*)_CH(?P<channel>\d).tif"
-    # )
     RAW_DATA_RE = r"cyc(?P<cycle>[0-9]{3})_reg(?P<region>[0-9]{3})/.*\w_(?P<tile>\d*)_Z(?P<zslice>\d*)_CH(?P<channel>\d)\.tif(?:f\.tiff)?$"
-    # PIPE_DATA_RE = r"cyc(?P<cycle>[0-9]{3})_reg(?P<region>[0-9]{3})/.*\w_(?P<tile>\d*)_Z(?P<zslice>\d*)_CH(?P<channel>\d).tiff.tiff"
     RAW_DIR_RE = r"cyc(?P<cycle>[0-9]{3})_reg(?P<region>[0-9]{3})"
     RAW_DIR_FMT = "cyc{cycle:03d}_reg{region:03d}"
     RAW_IMG_FMT = "{region:01d}_{tile:05d}_Z{zslice:03d}_CH{channel:01d}.tif"

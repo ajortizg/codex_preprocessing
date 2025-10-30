@@ -7,7 +7,6 @@ from typing import Dict, List, Optional, Tuple
 
 import dask.array as da
 import numpy as np
-import sopa
 import spatialdata as sd
 
 from codex_preprocessing._constants import Keys
@@ -61,15 +60,11 @@ class SpatialDataExporter(DataExporter):
         self,
         out_dir: str | Path,
         remove_markers: Optional[List[str]],
-        save_zarr: bool = True,
-        save_explorer: bool = False,
         scale_factors: Optional[List[int]] = None,
         rename_dict: Optional[Dict[str, str]] = None,
     ):
         self.remove_markers = remove_markers or []
         self.out_dir = ensure_path(out_dir)
-        self.save_zarr = save_zarr
-        self.save_explorer = save_explorer
         self.scale_factors = scale_factors
         self.rename_dict = rename_dict or {}
 
@@ -144,6 +139,7 @@ class SpatialDataExporter(DataExporter):
         log.info(f"Final marker set ({len(markers)}): {markers}")
 
         sdata = self._create_spatialdata(img, markers, reg_ds)
+        self._save_zarr(sdata, region)
         self._save_outputs(sdata, region, pixel_size_um)
 
     def _collect_images_and_markers(self, reg_ds: CodexDataset) -> Tuple[da.Array, np.ndarray]:
@@ -192,33 +188,6 @@ class SpatialDataExporter(DataExporter):
 
         log.info(f"Created SpatialData object: {sdata}")
         return sdata
-
-    def _save_outputs(self, sdata: sd.SpatialData, region: int, pixel_size_um: float):
-        """
-        Save SpatialData object to disk in requested formats.
-
-        Args:
-            sdata: SpatialData object to save
-            region: region identifier for naming
-            pixel_size_um: pixel size for explorer format
-        """
-        if self.save_explorer:
-            self._save_explorer(sdata, region, pixel_size_um)
-
-        if self.save_zarr:
-            self._save_zarr(sdata, region)
-
-    def _save_explorer(self, sdata: sd.SpatialData, region: int, pixel_size_um: float):
-        """Save in Sopa Explorer format."""
-        explorer_path = self.out_dir / f"reg{region:03d}.explorer"
-
-        # Remove existing directory
-        if explorer_path.exists():
-            log.info(f"Removing existing explorer directory: {explorer_path}")
-            shutil.rmtree(explorer_path)
-
-        sopa.io.explorer.write(str(explorer_path), sdata, pixel_size=pixel_size_um)
-        log.info(f"Explorer saved successfully: {explorer_path}")
 
     def _save_zarr(self, sdata: sd.SpatialData, region: int):
         """Save as Zarr store."""
