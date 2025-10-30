@@ -26,6 +26,7 @@ class Pipeline:
         4. stitching (optional, can be skipped)
         5. background_correction
         6. tma_dearray
+        7. data_export
 
     Args:
         data: Initial input dataset.
@@ -43,11 +44,13 @@ class Pipeline:
         CodexFiles.STITCHING,
         CodexFiles.BACKGROUND_CORRECTION,
         CodexFiles.TMA_DEARRAY,
+        CodexFiles.DATA_EXPORT,
     ]
 
     KEEP_NODES = {
         CodexFiles.BACKGROUND_CORRECTION,  # Keep background corrected data
         CodexFiles.TMA_DEARRAY,  # Keep TMA dearrayed data
+        CodexFiles.DATA_EXPORT,  # Keep final exported data
     }
 
     def __init__(
@@ -58,6 +61,7 @@ class Pipeline:
         stitching: Optional[Callable] = None,
         background_correction: Optional[Callable] = None,
         tma_dearray: Optional[Callable] = None,
+        data_export: Optional[Callable] = None,
         data: Optional[CodexDataset] = None,
         out_dir: Optional[str | Path] = None,
         remove_intermediate: bool = False,
@@ -74,6 +78,7 @@ class Pipeline:
             CodexFiles.STITCHING: stitching,
             CodexFiles.BACKGROUND_CORRECTION: background_correction,
             CodexFiles.TMA_DEARRAY: tma_dearray,
+            CodexFiles.DATA_EXPORT: data_export,
         }
 
         # Track pipeline state
