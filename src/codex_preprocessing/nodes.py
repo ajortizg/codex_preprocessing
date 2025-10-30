@@ -17,6 +17,7 @@ from codex_preprocessing.io import save_raw_img, save_raw_tile_stack, save_raw_z
 from codex_preprocessing.modules import (
     BackgroundCorrector,
     CoreographDearray,
+    DataExporter,
     Deconvolution,
     EDoF,
     IlluminationCorrector,
@@ -341,35 +342,6 @@ class BackgroundCorrectionNode(Node):
         algorithm.save(self.out_dir, out, batch["region"], batch["cycle"], batch["channel"], batch["tile"], batch["zslice"])
 
 
-# class OmeTifExportNode(Node):
-#     """
-#     OME-TIFF export node for CODEX images.
-
-#     Converts processed CODEX images to OME-TIFF format for compatibility
-#     with standard image analysis tools and long-term archival.
-
-#     Args:
-#         algorithm: OME-TIFF conversion algorithm instance or factory.
-#         ds: CODEX dataset containing processed images to export.
-#         out_dir: Output directory for OME-TIFF files.
-#         n_jobs: Number of parallel jobs for processing.
-#     """
-
-#     def __init__(self, algorithm: SopaExporter, ds: CodexDataset, out_dir: str):
-#         super().__init__(out_dir, CodexFiles.OMETIF, ds, algorithm, n_jobs=1)
-
-#         self.algorithm = algorithm(out_dir=self.out_dir)
-#         self.ds = self.algorithm.setup_dataset(self.ds)
-#         self.set_lazy(True)
-
-#     def process(self, indices: np.ndarray, algorithm: Any, verbose: bool, device: int):
-#         algorithm: SopaExporter = self.prepare_algorithm(algorithm, device)
-#         algorithm(self.ds)
-
-#     def process_batch(self, batch, batch_idx, algorithm):
-#         pass
-
-
 class TMADearrayNode(Node):
     def __init__(self, algorithm: CoreographDearray, ds: CodexDataset, out_dir: str, n_jobs: int, ref_cycle: int, ref_channel: int):
         super().__init__(out_dir, CodexFiles.TMA_DEARRAY, ds, algorithm, n_jobs=n_jobs)
@@ -393,3 +365,17 @@ class TMADearrayNode(Node):
             zslice=batch["zslice"],
             out_dir=self.out_dir,
         )
+
+
+class DataExportNode(Node):
+    def __init__(self, algorithm: DataExporter, ds: CodexDataset, out_dir: str):
+        super().__init__(out_dir, CodexFiles.DATA_EXPORT, ds, algorithm, n_jobs=1)
+        self.algorithm: DataExporter = algorithm(out_dir=self.out_dir)
+        self.ds = self.algorithm.setup_dataset(self.ds)
+
+    def process(self, indices: np.ndarray, algorithm: DataExporter, verbose: bool, device: int):
+        algorithm = self.prepare_algorithm(algorithm, device)
+        algorithm(self.ds)
+
+    def process_batch(self, batch, batch_idx, algorithm):
+        pass

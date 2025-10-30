@@ -13,6 +13,22 @@ from skimage.exposure import rescale_intensity
 
 from codex_preprocessing.utils import clip_and_cast_to_uint, configure_tensorflow_gpus
 
+# import tensorflow as tf
+
+# # Add at the beginning of the file or in __init__ method
+# os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # Use GPU 0
+
+
+# # Optional: Set memory growth to avoid OOM errors
+# gpus = tf.config.list_physical_devices("GPU")
+# if gpus:
+#     try:
+#         for gpu in gpus:
+#             tf.config.experimental.set_memory_growth(gpu, True)
+#     except RuntimeError as e:
+#         print(e)
+
+
 log = logging.getLogger(__name__)
 
 
@@ -25,9 +41,10 @@ class Deconvolution(abc.ABC):
     from this class and implement the __call__ method.
     """
 
-    def __init__(self):
+    def __init__(self, use_gpu: bool):
         super().__init__()
-        configure_tensorflow_gpus(True)
+        if use_gpu:
+            configure_tensorflow_gpus(True)
 
     @abc.abstractmethod
     def __call__(self, img3d: np.ndarray, channel: int) -> np.ndarray:
@@ -145,7 +162,7 @@ class RLDeconvolution(Deconvolution):
             use_gpu (bool): Whether to use GPU acceleration (recommended)
             **kwargs: Additional keyword arguments passed to RichardsonLucyDeconvolver.
         """
-        super().__init__()
+        super().__init__(use_gpu)
         self.n_iter = n_iter
         self.scale_factor = scale_factor
         self.psfs = None

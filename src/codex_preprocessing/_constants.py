@@ -1,3 +1,30 @@
+from sopa._constants import ATTRS_KEY, SopaKeys
+
+
+class Keys(SopaKeys):
+    IMAGE = "image"
+    EXPERIMENT = "exp_name"
+    LABELS = "labels"
+    TMA_CORE = "tma_core"
+
+    RAW_OBSM = "raw"
+    NORM_OBSM = "normalized"
+    VOR_EXPANSION_BOUNDARIES = "vor_expansion_boundaries"
+    VOR_REGION_BOUNDARIES = "vor_region_boundaries"
+    VOR_SUB_NUCLEI_BOUNDARIES = "vor_sub_nuclei_boundaries"
+
+    DEFAULT_CS = "global"
+
+    MEMBRANE_BOUNDARIES = "membrane_boundaries"
+    NUCLEAR_BOUNDARIES = "nuclear_boundaries"
+    CENTROID_BOUNDARIES = "centroid_boundaries"
+    CELL_BOUNDARIES = "cell_boundaries"
+
+    INSTANSEG_BOUNDARIES = "instanseg_boundaries"
+
+    CODEX_METADATA = "codex_metadata"
+
+
 class CodexFiles:
     SEG_TMP_DIR = "seg_temp.zarr"
     PREPROCESSING_DIR = "preprocessing"
@@ -44,3 +71,4 @@ class CodexFiles:
     STITCHING = "stitching"
     BACKGROUND_CORRECTION = "background_correction"
     TMA_DEARRAY = "tma_dearray"
+    DATA_EXPORT = "data_export"

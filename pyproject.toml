@@ -4,33 +4,33 @@ version = "0.1"
 requires-python = ">=3.10"
 
 dependencies = [
-    "numpy<2.0.0",
-    "tqdm",
-    "scipy",
-    "hydra-core<=1.3.0",
-    "hydra_colorlog",
-    "pandas<=2.2.1",
-    "matplotlib",
-    "tensorflow==2.14.1",
-    "scikit-learn",
-    "tifffile<=2025.1.10",
-    "scikit-image<=0.24.0",
-    "PyWavelets",
-    "openpyxl",
-    "flowdec",
-    "ashlar",
-    "jax<=0.4.7",
-    "jaxlib<=0.4.7",
-    "hyperactive==4.4.0",
-    "basicpy",
-    "rich",
-    "tabulate",
-    "cucim-cu11",
-    "cupy-cuda11x",
-    "dask",
-    "dask-image",
-    "stackview",
-    "opencv-python==4.10.0.82",
+    # "numpy<2.0.0",
+    # "tqdm",
+    # "scipy",
+    # "hydra-core<=1.3.0",
+    # "hydra_colorlog",
+    # "pandas<=2.2.1",
+    # "matplotlib",
+    # "tensorflow==2.14.1",
+    # "scikit-learn",
+    # "tifffile<=2025.1.10",
+    # "scikit-image<=0.24.0",
+    # "PyWavelets",
+    # "openpyxl",
+    # "flowdec",
+    # "ashlar",
+    # "jax<=0.4.7",
+    # "jaxlib<=0.4.7",
+    # "hyperactive==4.4.0",
+    # "basicpy",
+    # "rich",
+    # "tabulate",
+    # "cucim-cu11",
+    # "cupy-cuda11x",
+    # "dask",
+    # "dask-image",
+    # "stackview",
+    # "opencv-python==4.10.0.82",
 
     # torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
     # lightning
@@ -47,8 +47,8 @@ dependencies = [
     # sh ./make.sh
 ]
 
-[project.scripts]
-codex_preprocess = "codex_preprocessing.main:main"
+# [project.scripts]
+# codex_preprocess = "main:main"
 # codex_segment = "scripts.run_segmentation:main"
 
 [tool.setuptools.packages]

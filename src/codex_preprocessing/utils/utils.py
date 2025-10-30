@@ -16,12 +16,16 @@ def ensure_path(path: str | Path) -> Path:
     return path
 
 
-def configure_tensorflow_gpus(use_gpu):
+def configure_tensorflow_gpus(use_gpu, soft_placement=True):
 
     import tensorflow as tf
 
     if use_gpu is False:
         os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
+    if use_gpu is True and soft_placement:
+        # Configure TensorFlow to allow soft placement (CPU fallback for unsupported ops)
+        tf.config.set_soft_device_placement(True)
 
     else:
         gpus = tf.config.experimental.list_physical_devices("GPU")

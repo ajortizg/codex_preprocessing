@@ -1,0 +1,5 @@
+defaults:
+  - algorithm: spatialdata_exporter
+
+_target_: codex_preprocessing.nodes.DataExportNode
+_partial_: true

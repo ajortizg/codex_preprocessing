@@ -4,8 +4,8 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
-from basicpy import BaSiC
 
+from codex_preprocessing.modules.basicpy.basicpy import BaSiC
 from codex_preprocessing.utils import ensure_path
 
 log = logging.getLogger(__name__)

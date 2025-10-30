@@ -16,5 +16,6 @@ from .edof import (
     WhitenNorm,
 )
 from .illumination import Basic, IlluminationCorrector
+from .spatialdata_exporter import DataExporter, SpatialDataExporter
 from .stitching import Ashlar, M2Stitch, Stitching
 from .tma_dearray import CoreographDearray, TMADearray

@@ -19,6 +19,7 @@ pipeline:
     algorithm:
       scale_factor: 0
       n_iter: 25
+      use_gpu: true
     devices: [0, 0]
 
   edof:
@@ -26,7 +27,7 @@ pipeline:
 
   illumination_correction:
     n_jobs: 4
-  
+
   tma_dearray:
     n_jobs: 4
     ref_cycle: 2
