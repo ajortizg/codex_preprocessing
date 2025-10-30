@@ -83,7 +83,7 @@ class CoreographDearray(TMADearray):
         self.sigma = preproc.get("sigma", 0)
         self.clip_limit = preproc.get("clip_limit", 0)
         self.kernel_size = preproc.get("kernel_size", 8)
-        self.out_range = preproc.get("out_range", (0, 0.983))
+        self.out_range = tuple(preproc.get("out_range", (0, 0.983)))
 
         # Mask computation parameters
         mask = mask_params or {}
@@ -134,6 +134,7 @@ class CoreographDearray(TMADearray):
 
         # Normalize to [0, 1] and apply output range
         img = imtools.im2double(img)
+        log.info(f"out_range: {self.out_range}, {type(self.out_range)}")
         img = exposure.rescale_intensity(img, in_range=(np.min(img), np.max(img)), out_range=self.out_range)
         img = imtools.im2double(img)
 
@@ -438,46 +439,44 @@ class CoreographDearray(TMADearray):
 
     def detect_cores_from_reference(self, img: np.ndarray | da.Array, out_dir: Optional[str | Path] = None):
         if out_dir is not None:
-            out_dir = ensure_path(out_dir) / "debug"
-            out_dir.mkdir(parents=True, exist_ok=True)
-            log.info(f"Saving dearray debug outputs to {out_dir}")
+            out_dir = ensure_path(out_dir)
+            debug_dir = out_dir / "debug"
+            debug_dir.mkdir(parents=True, exist_ok=True)
+            log.info(f"Saving dearray debug outputs to {debug_dir}")
 
         log.info("Detecting cores from reference image")
         if isinstance(img, da.Array):
             img = img.compute()
 
         img_p = self.prepare_image_for_inference(img)
-        self._save_preprocessing_results(img_p, out_dir)
+        self._save_preprocessing_results(img_p, debug_dir)
 
         class_probs = self.predict_tissue_probability(img_p)
-        self._save_probability_results(class_probs, out_dir)
+        self._save_probability_results(class_probs, debug_dir)
 
         data = self.compute_tissue_mask(class_probs)
-        self._save_mask_results(data, out_dir)
+        self._save_mask_results(data, debug_dir)
 
         data = self.segment_individual_cores(data)
-        self._save_segmentation_results(data, out_dir)
+        self._save_segmentation_results(data, debug_dir)
 
         data = self.extract_cores(img, data, compute_masks=True)
-        self._create_comprehensive_visualization(img_p, data, out_dir)
+        self._create_comprehensive_visualization(img_p, data, debug_dir)
         self._save_core_masks(data, out_dir)
 
         data["preprocessed_image"] = img_p
-        self._save_detection_summary(data, img.shape, out_dir)
-        self._save_core_properties_csv(data["region_properties"], out_dir)
+        self._save_detection_summary(data, img.shape, debug_dir)
+        self._save_core_properties_csv(data["region_properties"], debug_dir)
 
         return data
 
     def _save_core_masks(self, data: Dict[str, Any], out_dir: Optional[Path]):
-        if out_dir is None:
-            return
-
         masks_dir = out_dir / "masks"
         masks_dir.mkdir(parents=True, exist_ok=True)
 
         core_masks = data["core_masks"]
         for lbl, mask in core_masks.items():
-            tifffile.imwrite(masks_dir / f"reg{lbl:03d}.tiff", mask)
+            tifffile.imwrite(masks_dir / f"mask_reg{lbl:03d}.tif", mask)
 
     def _save_preprocessing_results(self, img: np.ndarray, out_dir: Optional[Path]):
         if out_dir is None:

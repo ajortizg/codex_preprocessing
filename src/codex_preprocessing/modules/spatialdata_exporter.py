@@ -6,8 +6,10 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 import dask.array as da
+import dask_image
 import numpy as np
 import spatialdata as sd
+import tifffile
 
 from codex_preprocessing._constants import Keys
 from codex_preprocessing.data import CodexDataset
@@ -131,16 +133,14 @@ class SpatialDataExporter(DataExporter):
             for substr, newstr in self.rename_dict.items():
                 markers = [newstr if substr in m else m for m in markers]
 
-        markers = markers.tolist()
         if len(markers) == 0:
             raise ValueError(
                 f"No valid markers remaining after filtering for region {region}. " f"Check 'remove_markers' parameter: {self.remove_markers}"
             )
         log.info(f"Final marker set ({len(markers)}): {markers}")
 
-        sdata = self._create_spatialdata(img, markers, reg_ds)
+        sdata = self._create_spatialdata(img, markers, reg_ds, region)
         self._save_zarr(sdata, region)
-        self._save_outputs(sdata, region, pixel_size_um)
 
     def _collect_images_and_markers(self, reg_ds: CodexDataset) -> Tuple[da.Array, np.ndarray]:
         img_list = []
@@ -160,7 +160,7 @@ class SpatialDataExporter(DataExporter):
 
         return np.where(mask)[0]
 
-    def _create_spatialdata(self, img: da.Array, markers: List[str], reg_ds: CodexDataset) -> sd.SpatialData:
+    def _create_spatialdata(self, img: da.Array, markers: List[str], reg_ds: CodexDataset, region: int) -> sd.SpatialData:
         """
         Create a SpatialData object from the image and markers.
 
@@ -186,8 +186,24 @@ class SpatialDataExporter(DataExporter):
 
         sdata.attrs[Keys.CODEX_METADATA] = reg_ds.meta.get_dict()
 
+        self._maybe_add_tmacore_mask(sdata, reg_ds, region)
+
         log.info(f"Created SpatialData object: {sdata}")
         return sdata
+
+    def _maybe_add_tmacore_mask(self, sdata: sd.SpatialData, reg_ds: CodexDataset, region: int):
+        masks_dir = reg_ds.root_dir / "masks"
+
+        if masks_dir.exists():
+            mask = tifffile.imread(masks_dir / f"mask_reg{region:03d}.tif")
+
+            sdata[Keys.CORE_MASK] = sd.models.Labels2DModel.parse(
+                mask,
+                dims=("y", "x"),
+                transformations={Keys.DEFAULT_CS: sd.transformations.Identity()},
+                scale_factors=self.scale_factors,
+            )
+            log.info(f"Added TMA core mask to SpatialData for region {region}")
 
     def _save_zarr(self, sdata: sd.SpatialData, region: int):
         """Save as Zarr store."""

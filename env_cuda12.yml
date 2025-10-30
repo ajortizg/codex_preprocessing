@@ -4,10 +4,9 @@ channels:
   - nvidia
   - conda-forge
 dependencies:
-  - python=3.11
+  - python>=3.11
   - pip
   - numpy
-  # - cudnn
   - pandas
   - pillow
   - scipy
@@ -23,6 +22,7 @@ dependencies:
   - blessed
   - networkx
   - pip:
+    - tf_keras
     - hydra-core
     - hydra_colorlog
     - flowdec
@@ -40,5 +40,5 @@ dependencies:
     - torch
     - torchvision
     - opencv-python-headless
-    - spatialdata==0.5.0
+    - spatialdata>=0.5.0
     # - git+https://github.com/fbcotter/pytorch_wavelets

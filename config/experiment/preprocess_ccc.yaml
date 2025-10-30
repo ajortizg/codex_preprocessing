@@ -8,9 +8,8 @@ defaults:
 task_name: "preprocess_ccc"
 
 data:
-  # root_dir: "outputs/preprocess_ccc/2025-10-20/11-19-48/tma_dearray"
-  # root_dir: "/storage/groups/interpret_tme/codex_CCC/raw/MY_TMA_CCC_E_CIM"
-  root_dir: "outputs/preprocess_ccc/2025-10-30/12-03-04/illumination_correction"
+  root_dir: "itme_ccc_data/raw/MY_TMA_CCC_E_CIM"
+  # root_dir: "outputs/preprocess_ccc/2025-10-30/12-03-04/background_correction"
 
 pipeline:
   remove_intermediate: false
@@ -36,5 +35,3 @@ pipeline:
   data_export:
     algorithm:
       remove_markers: ["Empty", "Blank"]
-      rename_dict:
-        "SLC7A5/LAT1": "SLC7A5_LAT1"

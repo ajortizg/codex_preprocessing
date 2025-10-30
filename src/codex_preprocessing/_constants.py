@@ -1,5 +1,6 @@
 class Keys:
     IMAGE = "image"
+    CORE_MASK = "core_mask"
     DEFAULT_CS = "global"
     CODEX_METADATA = "codex_metadata"
 
