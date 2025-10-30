@@ -5,6 +5,7 @@ defaults:
   - stitching: default
   - background_correction: default
   - tma_dearray: null
+  - data_export: default
 
 _target_: "codex_preprocessing.pipeline.Pipeline"
 remove_intermediate: false
