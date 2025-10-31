@@ -198,7 +198,7 @@ class SpatialDataExporter(DataExporter):
             mask = tifffile.imread(masks_dir / f"mask_reg{region:03d}.tif")
 
             sdata[Keys.CORE_MASK] = sd.models.Labels2DModel.parse(
-                mask,
+                mask.astype(np.uint8),
                 dims=("y", "x"),
                 transformations={Keys.DEFAULT_CS: sd.transformations.Identity()},
                 scale_factors=self.scale_factors,
