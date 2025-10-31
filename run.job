@@ -2,14 +2,14 @@
 #SBATCH --partition=gn              # Specify the partition
 #SBATCH --gres=gpu:1                    # Request 1 GPU
 #SBATCH --job-name="prep_codex"     # Job name
-#SBATCH --output=./outputs/logs/MY_TMA_CCC_A_rpt_CIM.log  # Output file
+#SBATCH --output=./outputs/logs/MY_TMA_CCC_F_CIM.log  # Output file
 #SBATCH --nodes=1                   # Request 1 node
 #SBATCH --ntasks=1                  # Request 1 task
 #SBATCH --cpus-per-task=16          # Request CPU cores per task
 #SBATCH --mem=100G                  # Request RAM
 #SBATCH --nodelist=gn03
 
-python main.py +experiment=preprocess_ccc data.root_dir="itme_ccc_data/raw/MY_TMA_CCC_A_rpt_CIM"
+python main.py +experiment=preprocess_ccc
     # ~pipeline.deconvolution \
     # ~pipeline.edof \
     # ~pipeline.illumination_correction \
