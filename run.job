@@ -2,7 +2,7 @@
 #SBATCH --partition=gn              # Specify the partition
 #SBATCH --gres=gpu:1                    # Request 1 GPU
 #SBATCH --job-name="prep_codex"     # Job name
-#SBATCH --output=./outputs/logs/MY_TMA_CCC_F_CIM.log  # Output file
+#SBATCH --output=./outputs/logs/MY_TMA_CCC_J_CIM.log  # Output file
 #SBATCH --nodes=1                   # Request 1 node
 #SBATCH --ntasks=1                  # Request 1 task
 #SBATCH --cpus-per-task=16          # Request CPU cores per task

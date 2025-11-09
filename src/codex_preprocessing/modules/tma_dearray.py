@@ -134,7 +134,6 @@ class CoreographDearray(TMADearray):
 
         # Normalize to [0, 1] and apply output range
         img = imtools.im2double(img)
-        log.info(f"out_range: {self.out_range}, {type(self.out_range)}")
         img = exposure.rescale_intensity(img, in_range=(np.min(img), np.max(img)), out_range=self.out_range)
         img = imtools.im2double(img)
 
