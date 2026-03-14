@@ -35,10 +35,10 @@ dependencies:
     - tabulate
     - cucim-cu12
     - cupy-cuda12x
-    - dask
-    - dask-image
+    # - dask>=2024.10.0,<=2024.11.2
+    # - dask-image
     - torch
     - torchvision
     - opencv-python-headless
-    - spatialdata>=0.5.0
+    - spatialdata>=0.6.0
     # - git+https://github.com/fbcotter/pytorch_wavelets
