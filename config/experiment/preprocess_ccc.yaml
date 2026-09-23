@@ -8,7 +8,7 @@ defaults:
 task_name: "preprocess_ccc"
 
 data:
-  root_dir: "itme_ccc_data/raw/MY_TMA_CCC_J_CIM"
+  root_dir: "/storage/groups/interpret_tme/codex_CCC_raw/MY_TMA_CCC_C_CIM_MYedit"
   # root_dir: "outputs/preprocess_ccc/2025-10-30/12-03-04/background_correction"
 
 pipeline:
