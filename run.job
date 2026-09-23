@@ -1,15 +1,15 @@
 #!/bin/bash
-#SBATCH --partition=gn              # Specify the partition
-#SBATCH --gres=gpu:1                    # Request 1 GPU
-#SBATCH --job-name="prep_codex"     # Job name
-#SBATCH --output=./outputs/logs/MY_TMA_CCC_J_CIM.log  # Output file
-#SBATCH --nodes=1                   # Request 1 node
-#SBATCH --ntasks=1                  # Request 1 task
-#SBATCH --cpus-per-task=16          # Request CPU cores per task
-#SBATCH --mem=100G                  # Request RAM
+#SBATCH --partition=gn              
+#SBATCH --gres=gpu:1                    
+#SBATCH --job-name="prep_ipt"    
+#SBATCH --output=./outputs/logs/BAT_WT.log  
+#SBATCH --nodes=1                   
+#SBATCH --ntasks=1                  
+#SBATCH --cpus-per-task=16          
+#SBATCH --mem=100G                  
 #SBATCH --nodelist=gn03
 
-python main.py +experiment=preprocess_ccc
+python main.py +experiment=prep_BAT_WT
     # ~pipeline.deconvolution \
     # ~pipeline.edof \
     # ~pipeline.illumination_correction \

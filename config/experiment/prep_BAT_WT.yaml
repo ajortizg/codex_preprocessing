@@ -1,0 +1,31 @@
+# @package _global_
+
+defaults:
+  - override /data: raw_codex
+  - override /pipeline: default
+  - override /pipeline/tma_dearray: null
+
+task_name: "preprocess_ipt"
+
+data:
+  root_dir: "datasets/ipt_codex/BAT_WT_2105"
+
+pipeline:
+  remove_intermediate: false
+
+  deconvolution:
+    algorithm:
+      scale_factor: 0
+      n_iter: 25
+      use_gpu: true
+    devices: [0]
+
+  edof:
+    devices: [0, 0]
+
+  illumination_correction:
+    n_jobs: 4
+
+  data_export:
+    algorithm:
+      remove_markers: ["Empty", "Blank", "DAPI-01", "DAPI-03", "DAPI-04", "DAPI-05", "DAPI-06"]
