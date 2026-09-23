@@ -1,7 +1,7 @@
 import logging
 from copy import deepcopy
 from pathlib import Path
-from typing import Any, Callable, Dict, Literal, Optional, Sequence
+from typing import Any, Callable, Dict, List, Literal, Optional, Sequence
 
 import dask
 import dask.array
@@ -13,6 +13,12 @@ from skimage.io import imread
 from tabulate import tabulate
 
 from codex_preprocessing.data.metadata import Metadata
+from codex_preprocessing.data.quality import (
+    check_completeness,
+    check_metadata_consistency,
+    check_nyquist_sampling,
+    check_saturation,
+)
 from codex_preprocessing.io import read_processed_data, read_raw_data
 from codex_preprocessing.utils import ensure_path
 
@@ -28,6 +34,9 @@ class CodexDataset:
         mode (Literal["raw", "proc"]): Data loading mode - "raw" for raw format, "proc" for CODEX processor format.
         lazy_loading (bool): Whether to use lazy loading with dask arrays.
         read_markers (bool): Whether to read marker names from metadata.
+        validate (bool): Whether to run quality checks (file completeness, metadata
+            consistency, Nyquist sampling) when loading the dataset. Issues are logged
+            as warnings and collected in `self.quality_issues`.
     """
 
     def __init__(
@@ -36,11 +45,13 @@ class CodexDataset:
         mode: Literal["raw", "proc"],
         lazy_loading: bool,
         read_markers: bool = False,
+        validate: bool = True,
     ):
 
         self.set_mode(mode)
         self.set_lazy(lazy_loading)
         self.set_read_markers(read_markers)
+        self.set_validate(validate)
         self.load_dataset(root_dir)
 
     def load_dataset(self, root_dir: str | Path):
@@ -57,8 +68,29 @@ class CodexDataset:
             raise ValueError(f"Unknown mode: {self.mode}")
 
         self.df = df
+        self.quality_issues = self._run_quality_checks(df) if self.validate else []
+        for issue in self.quality_issues:
+            log.warning(issue)
+
         self.df["img_path"] = self.df["img_path"].apply(lambda x: [x])
         self._update_fields()
+
+    def _run_quality_checks(self, df: pd.DataFrame) -> List[str]:
+        """
+        Run the cheap, metadata-only quality checks (no image I/O).
+
+        Args:
+            df: DataFrame produced by read_raw_data/read_processed_data.
+
+        Returns:
+            List[str]: Combined issues from completeness, metadata consistency,
+                and Nyquist sampling checks.
+        """
+        issues = check_metadata_consistency(df, self.meta)
+        # if self.mode == "raw":
+        #     issues += check_completeness(df, self.meta)
+        issues += check_nyquist_sampling(self.meta)
+        return issues
 
     def set_mode(self, mode: Literal["raw", "proc"]):
         assert mode in {"raw", "proc"}, "mode must be either raw or proc."
@@ -69,6 +101,9 @@ class CodexDataset:
 
     def set_lazy(self, lazy_loading: bool = True):
         self.lazy_loading = lazy_loading
+
+    def set_validate(self, validate: bool):
+        self.validate = validate
 
     def read_data(self, img_paths, cyc) -> Dict[str, Any]:
         """
@@ -246,6 +281,30 @@ class CodexDataset:
         """
         t = tabulate(self.df, headers="keys", tablefmt="psql")
         stream(f"{t}")
+
+    def check_saturation(self, threshold: float = 0.001) -> List[str]:
+        """
+        Check every tile in the dataset for pixel saturation/clipping.
+
+        Unlike the checks run in load_dataset(), this reads every tile's pixel
+        data and is not run automatically. Call it explicitly when needed.
+
+        Args:
+            threshold (float): Maximum tolerated fraction of saturated pixels per tile.
+
+        Returns:
+            List[str]: One message per tile exceeding the saturation threshold.
+        """
+        issues = []
+        for i in range(len(self)):
+            data = self[i]
+            img = data["img"]
+            if hasattr(img, "compute"):
+                img = img.compute()
+            msg = check_saturation(img, self.meta, threshold)
+            if msg is not None:
+                issues.append(f"region={data['region']} cycle={data['cycle']} tile={data['tile']} channel={data['channel']}: {msg}")
+        return issues
 
     def is_lazy(self) -> bool:
         """

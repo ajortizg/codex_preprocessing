@@ -4,3 +4,4 @@ root_dir: ???
 mode: "raw" # raw, proc
 lazy_loading: false
 read_markers: false
+validate: true
